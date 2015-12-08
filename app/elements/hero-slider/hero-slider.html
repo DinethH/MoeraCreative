@@ -9,32 +9,43 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="/bower_components/polymer/polymer.html">
-<link rel="import" href="/bower_components/iron-image/iron-image.html">
 
-<link rel="import" href="/bower_components/iron-flex-layout/iron-flex-layout.html">
-<link rel="import" href="/bower_components/paper-styles/typography.html">
-<link rel="import" href="/bower_components/paper-styles/color.html">
-<link rel="import" href="/bower_components/neon-animation/neon-animated-pages.html">
-<link rel="import" href="/bower_components/neon-animation/neon-animatable.html">
-<link rel="import" href="/bower_components/neon-animation/neon-animations.html">
+    <link rel="import" href="/bower_components/iron-flex-layout/iron-flex-layout.html">
+    <link rel="import" href="/bower_components/paper-styles/typography.html">
+    <link rel="import" href="/bower_components/paper-styles/color.html">
+    <link rel="import" href="/bower_components/neon-animation/neon-animated-pages.html">
+    <link rel="import" href="/bower_components/neon-animation/neon-animatable.html">
+    <link rel="import" href="/bower_components/neon-animation/neon-animations.html">
+    <link rel="import" href="/bower_components/iron-image/iron-image.html">
 
 <dom-module id="hero-slider">
   <template>
     <style>
       :host {
         display: block;
+        
+      }
+      iron-image {
+        width: 95vw; 
+        height: 95vh;
       }
     </style>
-    <div>Hello from <span>{{foo}}</span></div>
-      <neon-animated-pages class="flex" id="pages" selected="[[selected]]" entry-animation="[[entryAnimation]]" exit-animation="[[exitAnimation]]">
+    
+    <neon-animated-pages class="layout flex" id="pages" selected="[[selected]]" entry-animation="[[entryAnimation]]" exit-animation="[[exitAnimation]]">
         <neon-animatable>
-          <iron-image src="http://lorempixel.com/400/400"></iron-image>
+          <iron-image preload sizing="contain" src="/img/heroimage1@2x.jpg"></iron-image>
         </neon-animatable>
-        <neon-animatable>2</neon-animatable>
-        <neon-animatable>3</neon-animatable>
-        <neon-animatable>4</neon-animatable>
-        <neon-animatable>5</neon-animatable>
+        <neon-animatable>
+          <iron-image preload sizing="contain" src="/img/heroimage2@2x.jpg"></iron-image>
+        </neon-animatable>
+        <neon-animatable>
+            <iron-image preload sizing="contain" src="/img/heroimage3@2x.jpg"></iron-image>
+        </neon-animatable>
+        <neon-animatable>
+            <iron-image preload sizing="contain" src="/img/heroimage4@2x.jpg"></iron-image>
+        </neon-animatable>
       </neon-animated-pages>
+
   </template>
   <script>
   (function() {
@@ -49,6 +60,27 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           value: 'hero-slider',
           notify: true
         }
+      },
+
+      ready: function () {
+          this.selected = -1,
+          this.nextCount();
+      },
+      
+      nextCount: function () {
+          if (this.selected < 3) {
+            this.entryAnimation = 'slide-from-left-animation';
+            this.exitAnimation = 'slide-right-animation';
+            this.selected = this.selected + 1;
+          } else {
+            this.entryAnimation = 'slide-from-right-animation';
+            this.exitAnimation = 'slide-left-animation';
+            this.selected = 0;
+          }
+          console.log(this.selected);
+          this.counter++;
+          
+          this.async(this.nextCount, 6000);
       }
     });
   })();

@@ -85,12 +85,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       var scope = document.querySelector('template[is="dom-bind"]');
       scope.selected = -1;
       scope.counter = 0;
-      scope.ready = function() {
-       //this.async(function() {
+      scope.attached = function() {
+       this.async(function() {
           this.nextCount();
-          this.nextCount();
-          this.nextCount();
-       //});
+          console.log("test");
+       });
       }
       
       scope.nextCount = function () {
@@ -102,7 +101,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           //console.log(this.selected);
           this.counter++;
           console.log(this.counter);
-          //this.async(this.nextCount, 6000);
+          this.async(this.nextCount, 6000);
       }
 
       scope._onPrevClick = function() {
