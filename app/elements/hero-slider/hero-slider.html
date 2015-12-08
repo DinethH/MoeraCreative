@@ -11,6 +11,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="/bower_components/polymer/polymer.html">
 
     <link rel="import" href="/bower_components/iron-flex-layout/iron-flex-layout.html">
+    <link rel="import" href="/bower_components/iron-flex-layout/classes/iron-flex-layout.html">
     <link rel="import" href="/bower_components/paper-styles/typography.html">
     <link rel="import" href="/bower_components/paper-styles/color.html">
     <link rel="import" href="/bower_components/neon-animation/neon-animated-pages.html">
@@ -26,8 +27,29 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         
       }
       iron-image {
-        width: 95vw; 
-        height: 95vh;
+        width: 100vw; 
+        height: 100vh;
+      }
+      
+      .sprite {
+        @apply(--layout-horizontal);
+        z-index: 1000;
+        
+      }
+      .not-selected-circle {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        border: 2px solid #89cbe0;
+        margin: 10px;
+      }
+      .selected-circle {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: #ccc;
+        border: 2px solid #ccc;
+        margin: 10px;
       }
     </style>
     
@@ -45,6 +67,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <iron-image preload sizing="contain" src="/img/heroimage4@2x.jpg"></iron-image>
         </neon-animatable>
       </neon-animated-pages>
+      
+    <div class="flex layout horizontal end center-justified" style="height: 100vh; margin-top: -20px; margin-left: 15px;">
+      
+      <div class="sprite">
+      <div class$="{{circle1}}"></div>
+      <div class$="{{circle2}}"></div>
+      <div class$="{{circle3}}"></div>
+      <div class$="{{circle4}}"></div>
+    </div>
+    
+    </div>
 
   </template>
   <script>
@@ -71,13 +104,33 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           if (this.selected < 3) {
             this.entryAnimation = 'slide-from-left-animation';
             this.exitAnimation = 'slide-right-animation';
+            
             this.selected = this.selected + 1;
           } else {
             this.entryAnimation = 'slide-from-right-animation';
             this.exitAnimation = 'slide-left-animation';
             this.selected = 0;
           }
-          console.log(this.selected);
+          if (this.selected == 0) {
+            this.circle1 = "selected-circle";
+          } else {
+            this.circle1 = "not-selected-circle";
+          }
+          if (this.selected == 1) {
+            this.circle2 = "selected-circle";
+          } else {
+            this.circle2 = "not-selected-circle";
+          }
+          if (this.selected == 2) {
+            this.circle3 = "selected-circle";
+          } else {
+            this.circle3 = "not-selected-circle";
+          }
+          if (this.selected == 3) {
+            this.circle4 = "selected-circle";
+          } else {
+            this.circle4 = "not-selected-circle";
+          }
           this.counter++;
           
           this.async(this.nextCount, 6000);
